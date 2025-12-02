@@ -9,7 +9,7 @@ main:
     mov $0, %edi
     mov $50, %ecx
     
-// edi is the answer, ecx will be the current number
+// edi is the answer, ecx is the current number
 readAndSolve:
     push %ecx
     push %edi
