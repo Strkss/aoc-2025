@@ -1,5 +1,5 @@
 .section .data
-scanfString: .asciz "%s"
+scanfString: .asciz "%7s"
 printfString: .asciz "%s\n"
 printfNum: .asciz "%d\n"
 charArr: .space 8
@@ -12,21 +12,14 @@ main:
 // edi is the answer, ecx is the current number
 readAndSolve:
     push %ecx
-    push %edi
-    push $printfNum
-    call printf
-    addl $8, %esp
-    pop %ecx
-
-    push %ecx
     push $charArr
     push $scanfString
     call scanf
     addl $8, %esp
     pop %ecx
 
-    cmp $0, %eax
-    jz exit
+    cmp $-1, %eax
+    je exit
     
     push %ecx
     push $charArr
@@ -127,5 +120,11 @@ returnFromLoop:
     ret
 
 exit:
-    push $0
-    call exit
+    push %edi
+    push $printfNum
+    call printf
+    addl $8, %esp
+
+    movl $1, %eax
+    movl $0, %ebx
+    int $0x80
